@@ -1,0 +1,91 @@
+# LearningOps — System Settings
+# This file is in the System Layer (see DATA_CONTRACT.md).
+# It contains soft rule defaults that can be changed by the learner.
+# Hard rules are in LEARNING_AGENT.md and cannot be changed here.
+
+# ─── Model settings ─────────────────────────────────────────────────────────
+model:
+  # Primary model used for all learning sessions
+  # Claude options: claude-sonnet-4-6, claude-opus-4-7, claude-haiku-4-5-20251001
+  # OpenAI/Codex options: gpt-4o, gpt-4-turbo, o3
+  primary: "claude-sonnet-4-6"
+
+  # Consolidation uses the same model by default
+  # Set to a faster/cheaper model if consolidation speed matters more than quality
+  consolidation: "claude-sonnet-4-6"
+
+# ─── Context loading ─────────────────────────────────────────────────────────
+context:
+  # Number of past session files to load at session start, per topic
+  # Higher = more continuity, higher token cost
+  sessions_loaded: 3
+
+  # Whether to load the full topic file or a summary at session start
+  # full = load entire topics/<topic_id>.md
+  # summary = load only known_concepts, gaps, and next_actions sections
+  topic_load_mode: "full"
+
+# ─── Review and spaced repetition ────────────────────────────────────────────
+review:
+  # Default days before a newly introduced concept enters the review queue
+  default_days: 4
+
+  # How many review items to surface at the start of a review session
+  max_items_per_session: 5
+
+  # Whether to show overdue reviews at the start of every session (not just review mode)
+  surface_overdue_in_all_modes: true
+
+# ─── Topic management ─────────────────────────────────────────────────────────
+topics:
+  # Maximum active topics before the agent warns (does not block)
+  max_active: 5
+
+  # Number of sessions per topic before the agent suggests archiving old sessions
+  auto_archive_threshold: 10
+
+# ─── Session behavior ─────────────────────────────────────────────────────────
+session:
+  # Warn the learner if the session ends without a consolidation run
+  consolidation_required: true
+
+  # A concept cannot reach confidence: high without at least one evidence entry
+  # Setting to false degrades tracking quality — only disable for informal exploration
+  evidence_required_for_mastery: true
+
+  # Orientation at session start: show open next_actions from the last session
+  show_open_actions_on_start: true
+
+# ─── Explanation defaults ─────────────────────────────────────────────────────
+explanation:
+  # Fallback style if learner/profile.md has no style preference set
+  # Options: structured, conversational, example-first, analogy-first, socratic
+  default_style: "structured with examples"
+
+  # Whether to always suggest a small practical next action after an explanation
+  suggest_next_action_after_explanation: true
+
+# ─── Evidence types ───────────────────────────────────────────────────────────
+# These are the valid values for the `type` field in session evidence entries.
+# Add custom types here if needed. Keep them lowercase and hyphenated.
+evidence_types:
+  - explanation     # Learner explained a concept back in their own words
+  - quiz            # Learner answered quiz or practice questions
+  - project         # Learner built something (app, script, prototype)
+  - code            # Learner wrote code demonstrating the concept
+  - summary         # Learner wrote a summary or notes
+  - recall          # Learner recalled a concept correctly after a delay
+  - correction      # Learner identified and corrected their own mistake
+  - application     # Learner applied the concept in a real task
+
+# ─── Browser UI / API ────────────────────────────────────────────────────────
+api:
+  # Local backend port for the browser UI
+  # Must match the port in server/server.js (or equivalent)
+  port: 3000
+
+  # Whether the backend should stream responses from the LLM
+  streaming: true
+
+  # CORS origin for the browser UI (use "*" for local dev only)
+  cors_origin: "http://localhost:3000"

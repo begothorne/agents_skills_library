@@ -1,0 +1,28 @@
+# LearningOps — Learner Identity Config
+# User Layer (see DATA_CONTRACT.md) — never auto-updated.
+# This is a quick-reference identity file used alongside learner/profile.md.
+# Full learning goals, style, and topic details belong in learner/profile.md.
+#
+# Fill in your details below. Remove placeholder text before first use.
+
+learner:
+  # Your preferred name
+  name: ""
+
+  # Your timezone (used for session dates and review scheduling)
+  # Example: Europe/Berlin, America/New_York, Asia/Kolkata
+  timezone: ""
+
+  # Primary language you learn in (not the language you are learning)
+  primary_language: "English"
+
+# ─── Preferred entry point ───────────────────────────────────────────────────
+# How you most often start a learning session.
+# Options: claude-code, codex, browser, app
+preferred_entry: "claude-code"
+
+# ─── Source of truth note ─────────────────────────────────────────────────────
+# Goals, active topics, learning style, and all learning state belong in
+# learner/profile.md — not here. This file holds identity fields only
+# (name, timezone, language, preferred entry point) so agents can load it
+# as a fast-reference header without needing to parse the full profile.
